@@ -20,6 +20,7 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
 end
 
 # Make it easier to express checking or unchecking several boxes at once
+
 #  "When I uncheck the following ratings: PG, G, R"
 #  "When I check the following ratings: G"
 
@@ -27,14 +28,24 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+  rating_list.split(',').each do |rating|
+    s = '"ratings[' + rating.strip + ']"'
+    if uncheck
+      step %Q{I uncheck #{s}}
+    else
+      step %Q{I check #{s}}
+    end
+  end
 end
 
-#Given /I have added "(.*)" with rating "(.*)"/ do |title, rating|
-#  Given %Q{I am on the Create New Movie page}
-#  When  %Q{I fill in "Title" with "#{title}"}
-#  And   %Q{I select "#{rating}" from "Rating"}
-#  And   %Q{I press "Save Changes"}
-#end
+Then /I should see all of the movies/ do 
+
+  movies_table.rows.should == Movie.find(:all).size
+end
+
+Then /I should see none of the movies/ do 
+  movies_table.rows.should == 0
+end
 
 #Then /I should see "(.*)" before "(.*)" on (.*)/ do |string1, string2, path|
 #  Given %Q{I am on #{path}}

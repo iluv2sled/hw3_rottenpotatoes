@@ -39,12 +39,11 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 end
 
 Then /I should see all of the movies/ do 
-
-  movies_table.rows.should == Movie.find(:all).size
+  assert page.all("table#movies tr").count == Movie.find(:all).size +1, "I should see more movies"
 end
 
 Then /I should see none of the movies/ do 
-  movies_table.rows.should == 0
+  assert page.all("table#movies tr").count == 1, "I should not see any movies"
 end
 
 #Then /I should see "(.*)" before "(.*)" on (.*)/ do |string1, string2, path|

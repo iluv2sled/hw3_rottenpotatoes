@@ -23,9 +23,9 @@ Background: movies have been added to database
 
 Scenario: sort movies alphabetically
   # your steps here
-#Given I am on the RottenPotatoes home page
-# And I click 'Movie Title'
-# Then I should See "Aladdin before "Amelie"
+  When I follow "Movie Title"
+
+  Then I should see "Aladdin" before "Amelie"
 #Then I should see all movies ordered by title
 #  Then I should see "2001: A Space Odyssey" before "The Terminator"
 

@@ -14,9 +14,9 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  puts "i am here #{e1.inspect}, #{e2.inspect}"
-  
-  assert e1 < e2, "not in sorted order"
+#puts "i am here #{e1.inspect}, #{e2.inspect}"
+#debugger 
+  assert page.body.index(e1) < page.body.index(e2), "not in sorted order"
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -39,7 +39,7 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 end
 
 Then /I should see all of the movies/ do 
-  assert page.all("table#movies tr").count == Movie.find(:all).size +1, "I should see more movies"
+  assert page.all("table#movies tr").count == Movie.find(:all).size + 1, "I should see more movies"
 end
 
 Then /I should see none of the movies/ do 
